@@ -26,7 +26,7 @@ class TodoItem extends StatelessWidget {
               decoration: TextDecoration.lineThrough),
         ),
         trailing: Container(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           height: 36,
           width: 36,
           decoration: BoxDecoration(
