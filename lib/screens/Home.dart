@@ -1,35 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:todolistproject/constants/colors.dart';
+import 'package:todolistproject/model/toDo.dart';
 import 'package:todolistproject/widgets/TodoITem.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
 
+  final todosList = ToDo.toDoList();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: tdBGroundColor,
       appBar: _buildAppBar(),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          children: [
-            searchBox(),
-            Expanded(
-                child: ListView(
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 48, bottom: 24),
-                  child: const Text(
-                    'Sua agenda: ',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const TodoItem(),
+                searchBox(),
+                Expanded(
+                    child: ListView(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 48, bottom: 24),
+                      child: const Text(
+                        'Sua agenda: ',
+                        style: TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    for (ToDo todo in todosList)
+                      TodoItem(
+                        todo: todo,
+                      ),
+                  ],
+                ))
               ],
-            ))
-          ],
-        ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              children: [
+                Expanded(
+                    child: Container(
+                  margin: EdgeInsets.only(bottom: 24, right: 16, left: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 0),
+                        blurRadius: 10.0,
+                        spreadRadius: 0,
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Adicione uma nova atividade.',
+                        border: InputBorder.none),
+                  ),
+                )),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20, right: 20),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: tdBlue,
+                        minimumSize: Size(64, 64),
+                        elevation: 10),
+                    child: Text('+',
+                        style: TextStyle(fontSize: 40, color: Colors.white)),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

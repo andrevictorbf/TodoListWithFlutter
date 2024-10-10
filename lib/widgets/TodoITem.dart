@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:todolistproject/model/toDo.dart';
 
 import '../constants/colors.dart';
 
 class TodoItem extends StatelessWidget {
-  const TodoItem({super.key});
+  final ToDo todo;
+  const TodoItem({super.key, required this.todo});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          print("User click");
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         tileColor: Colors.white,
-        leading: const Icon(
-          Icons.check_box,
+        leading:  Icon(
+          todo.done ? Icons.check_box : Icons.check_box_outline_blank,
           color: tdBlue,
         ),
-        title: const Text(
-          'Dormir',
+        title: Text(
+          todo.toDoText!,
           style: TextStyle(
               fontSize: 16,
               color: tdBlack,
-              decoration: TextDecoration.lineThrough),
+              decoration:todo.done? TextDecoration.lineThrough : null),
         ),
         trailing: Container(
           padding: const EdgeInsets.all(0),
@@ -34,7 +39,9 @@ class TodoItem extends StatelessWidget {
           child: IconButton(
               color: Colors.white,
               iconSize: 16,
-              onPressed: () {},
+              onPressed: () {
+                print("user clicked on delete icon");
+              },
               icon: const Icon(Icons.delete)),
         ),
       ),
